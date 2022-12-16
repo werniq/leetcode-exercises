@@ -1,26 +1,16 @@
-/**
- * Definition for singly-linked list.
- * type ListNode struct {
- *     Val int
- *     Next *ListNode
- * 0 <-> 1 | 2 <-> 3 
- }
- */ 
-func swapPairs(head *ListNode) *ListNode {
-	if head == nil || head.Next == nil {
-		return head
-	}
-
-	var prev *ListNode
-	curr := head
-	head = curr.Next
-	for ; curr != nil && curr.Next != nil; curr = curr.Next {
-		next := curr.Next
-		if prev != nil {
-			prev.Next = next
+func rotate(matrix [][]int) {
+	l := len(matrix) / 2
+	x := math.Floor(float64(l))
+	for min := 0; min < int(x); min++ {
+		max := len(matrix) - min - 1
+		for i := min; i < max; i++ {
+			offset := i - min
+			top := matrix[i][min]
+			top = matrix[min][i]
+			matrix[min][i] = matrix[max - offset][min]
+			matrix[max - offset][min] = matrix[max][max - offset]
+			matrix[max][max - offset] = matrix[i][max]
+			matrix[i][max] = top
 		}
-		curr.Next, next.Next, prev = next.Next, curr, curr
 	}
-
-	return head
 }
